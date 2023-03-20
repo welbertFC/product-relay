@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.4'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id 'com.github.davidmc24.gradle.plugin.avro' version '1.6.0'
 }
 
 group = 'com.br.motogear'
@@ -16,15 +17,40 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven {
+		name "Confluent"
+		url "https://packages.confluent.io/maven/"
+	}
 }
 
 dependencies {
+	implementation 'org.springframework:spring-web'
+	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-web-services'
-	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'io.confluent:kafka-avro-serializer:7.3.2'
+	implementation 'org.apache.avro:avro:1.11.1'
+	implementation 'com.github.davidmc24.gradle.plugin:gradle-avro-plugin:1.6.0'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.cloud:spring-cloud-stream:4.0.1'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
+	implementation 'org.springdoc:springdoc-openapi-starter-common:2.0.4'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+	implementation 'org.mapstruct:mapstruct-jdk8:1.5.3.Final'
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springdoc:springdoc-openapi-starter-webflux-api:2.0.4'
+	testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+	testCompileOnly 'org.mapstruct:mapstruct'
+}
+
+generateAvroJava {
+	source 'src/main/resources/avro'
 }
 
 tasks.named('test') {

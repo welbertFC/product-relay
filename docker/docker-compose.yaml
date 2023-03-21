@@ -70,7 +70,7 @@ services:
     networks:
       - moto-gear-network
     environment:
-      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka:29092'
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
       CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
       CONTROL_CENTER_REPLICATION_FACTOR: 1
@@ -78,26 +78,30 @@ services:
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
 
-#  product-relay:
-#    container_name: product-relay
-#    build:
-#      context: ..
-#      dockerfile: Dockerfile
-#    image: product-relay:latest
-#    depends_on:
-#      - zookeeper
-#      - kafka
-#      - schema-registry
-#      - control-center
-#    links:
-#      - zookeeper
-#      - kafka
-#      - schema-registry
-#      - control-center
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - upl-network
+  product-relay:
+    container_name: product-relay
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: product-relay:latest
+    depends_on:
+      - zookeeper
+      - kafka
+      - schema-registry
+      - control-center
+    links:
+      - zookeeper
+      - kafka
+      - schema-registry
+      - control-center
+    ports:
+      - "8080:8080"
+    networks:
+      - moto-gear-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    command: --spring.profiles.active=docker
+
 
 networks:
   moto-gear-network:

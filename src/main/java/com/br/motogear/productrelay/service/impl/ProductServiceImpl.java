@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-//    @Value("${topic.producer}")
-//    private final String topic;
+    @Value("${topic.producer}")
+    private String topic;
 
     private final ProductMapper productMapper;
 
@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
         var productEvent = productMapper.entityToEvent(product);
 
         try {
-            kafkaTemplate.send("product-post", productEvent);
+            kafkaTemplate.send(topic, productEvent);
             log.info("m=doSend, send product{} to kafka", productEvent);
         } catch (Exception e) {
             log.error("M=doSend, message=error sending event, product={}, e={}", productEvent, e);

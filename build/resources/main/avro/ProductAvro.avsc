@@ -1,7 +1,7 @@
 {
-  "namespace": "com.br.motogear.productrelay",
+  "namespace": "br.com.motogear.product",
   "type": "record",
-  "name": "ProductEvent",
+  "name": "ProductPost",
   "fields": [
     {
       "name": "name",

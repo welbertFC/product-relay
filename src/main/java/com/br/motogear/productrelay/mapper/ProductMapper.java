@@ -1,9 +1,8 @@
 package com.br.motogear.productrelay.mapper;
 
-import com.br.motogear.productrelay.ProductEvent;
+import br.com.motogear.product.ProductPost;
 import com.br.motogear.productrelay.controller.dto.ProductRequest;
 import com.br.motogear.productrelay.entity.ProductEntity;
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -13,5 +12,5 @@ public interface ProductMapper {
 
     ProductEntity requestToEntity(ProductRequest input);
 
-    ProductEvent entityToEvent(ProductEntity input);
+    ProductPost entityToEvent(ProductEntity input);
 }

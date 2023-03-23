@@ -1,6 +1,6 @@
 package com.br.motogear.productrelay.mapper;
 
-import com.br.motogear.productrelay.ProductEvent;
+import br.com.motogear.product.ProductPost;
 import com.br.motogear.productrelay.controller.dto.ProductRequest;
 import com.br.motogear.productrelay.entity.ProductEntity;
 import javax.annotation.processing.Generated;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-20T22:03:33-0300",
+    date = "2023-03-22T21:37:34-0300",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.6.1.jar, environment: Java 17 (Oracle Corporation)"
 )
 @Component
@@ -30,19 +30,19 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public ProductEvent entityToEvent(ProductEntity input) {
+    public ProductPost entityToEvent(ProductEntity input) {
         if ( input == null ) {
             return null;
         }
 
-        ProductEvent.Builder productEvent = ProductEvent.newBuilder();
+        ProductPost.Builder productPost = ProductPost.newBuilder();
 
-        productEvent.setName( input.getName() );
-        productEvent.setDescription( input.getDescription() );
+        productPost.setName( input.getName() );
+        productPost.setDescription( input.getDescription() );
         if ( input.getPrice() != null ) {
-            productEvent.setPrice( input.getPrice().doubleValue() );
+            productPost.setPrice( input.getPrice().doubleValue() );
         }
 
-        return productEvent.build();
+        return productPost.build();
     }
 }

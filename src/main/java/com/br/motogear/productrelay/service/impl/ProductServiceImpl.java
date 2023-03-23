@@ -1,6 +1,7 @@
 package com.br.motogear.productrelay.service.impl;
 
-import com.br.motogear.productrelay.ProductEvent;
+
+import br.com.motogear.product.ProductPost;
 import com.br.motogear.productrelay.entity.ProductEntity;
 import com.br.motogear.productrelay.mapper.ProductMapper;
 import com.br.motogear.productrelay.service.ProductService;
@@ -20,17 +21,17 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper productMapper;
 
-    private final KafkaTemplate<String, ProductEvent> kafkaTemplate;
+    private final KafkaTemplate<String, ProductPost> kafkaTemplate;
 
 
     public void post (ProductEntity product){
-        var productEvent = productMapper.entityToEvent(product);
+        var productPost = productMapper.entityToEvent(product);
 
         try {
-            kafkaTemplate.send(topic, productEvent);
-            log.info("m=doSend, send product{} to kafka", productEvent);
+            kafkaTemplate.send(topic, productPost);
+            log.info("m=doSend, send product{} to kafka", productPost);
         } catch (Exception e) {
-            log.error("M=doSend, message=error sending event, product={}, e={}", productEvent, e);
+            log.error("M=doSend, message=error sending event, product={}, e={}", productPost, e);
 
         }
 
